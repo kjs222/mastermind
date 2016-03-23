@@ -66,6 +66,7 @@ class Guess
     if is_it_a_guess?(secret) && is_guess_valid?(secret)
       if secret.winning_guess?(make_guess_array)
         puts "You guessed it right!"
+        #FIX THIS LATER TO RUN END GAME FUNCTION (TRUE HAS TO BE LAST)
         true
       else
         @num_guesses += 1
@@ -85,9 +86,13 @@ if __FILE__ == $0
   p test_secret.game_size
   p test_secret.secret_code
   test_guess = Guess.new
-  test_guess.request_guess
-  until test_guess.is_guess_correct?(test_secret) do
+  loop do
     test_guess.request_guess
-    test_guess.is_guess_correct?(test_secret)
+    break if test_guess.is_guess_correct?(test_secret)
   end
+
+  # until  do
+  #   test_guess.request_guess
+  #   test_guess.is_guess_correct?(test_secret)
+  # end
 end
