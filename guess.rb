@@ -15,22 +15,23 @@ class Guess
 
   def request_guess
     puts "Enter your guess or 'q' to quit: "
-    @current_guess = gets.chomp.downcase
+    @current_guess = gets.chomp.upcase
   end
 
-  def is_it_a_guess?
-    if @current_guess == 'c' || @current_guess == 'cheat'
-      puts "The secret code is #{secret.reveal_secret}"
-    elsif @current_guess == 'q' || @current_guess == 'quit'
+  def is_it_a_guess?(secret)
+    if @current_guess == 'C' || @current_guess == 'CHEAT'
+      puts "The secret code is: #{secret.reveal_secret}"
+    elsif @current_guess == 'Q' || @current_guess == 'QUIT'
       puts "Thanks for playing.  See you soon."
     else
       true
+    end
   end
 
   def is_guess_valid?(secret)
-    if @current_guess.size >= secret.how_long
+    if @current_guess.size > secret.how_long
       puts "That's too long.  Please try another guess."
-    elsif @current_guess.size <= secret.how_long
+    elsif @current_guess.size < secret.how_long
       puts "That's too short.  Please try another guess."
     else
       true
@@ -50,6 +51,7 @@ class Guess
         correct_colors += secret.how_many(color)
       end
     end
+    correct_colors
   end
 
   def num_correct_placement(secret)
@@ -57,24 +59,35 @@ class Guess
     @guess_array.each_with_index do |current_guess, index|
       correct_placement += 1 if current_guess == secret.color_at_position(index)
     end
+    correct_placement
   end
 
-  def evaluate_guess
-    if is_it_a_guess? && is_guess_valid?(secret)
+  def is_guess_correct?(secret)
+    if is_it_a_guess?(secret) && is_guess_valid?(secret)
       if secret.winning_guess?(make_guess_array)
         puts "You guessed it right!"
-        # ADD THE PLAY AGAIN FUNCTION CALL HERE
+        true
       else
         @num_guesses += 1
-        puts "Guess #{@num_guesses}:  You have #{num_correct_colors(secret)} colors correct.\n  #{num_correct_placement(secret)} are in the correct place.\n Try again."
-        request_guess
+        puts "\nGuess #{@num_guesses} was: #{@current_guess}\n#{num_correct_colors(secret)} correct color(s) \n#{num_correct_placement(secret)} in the correct place\n\nTry again!"
+        false
       end
+    else
+      true
     end
   end
+
 
 end
 
 if __FILE__ == $0
-  test = Guess.new
-  test.request_guess
+  test_secret = Secret.new(4)
+  p test_secret.game_size
+  p test_secret.secret_code
+  test_guess = Guess.new
+  test_guess.request_guess
+  until test_guess.is_guess_correct?(test_secret) do
+    test_guess.request_guess
+    test_guess.is_guess_correct?(test_secret)
+  end
 end
