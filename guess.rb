@@ -1,76 +1,75 @@
 require_relative 'secret'
+
 class Guess
   def initialize
-    @guess = ""
+    @current_guess = ""
     @guess_array = []
+    @num_guesses = 0
     @colors_hash = {'r' => 'red', 'g' => 'green', 'b' => 'blue', 'y' => 'yellow'}
 
   end
 
-  attr_reader :guess
+  attr_reader :current_guess
   attr_reader :guess_color_array
+  attr_reader :num_guesses
 
   def request_guess
-    puts "What is your guess?"
-    @guess = gets.chomp.downcase
-    if @guess == 'c' || @guess == 'cheat'
-      puts "I will show the secret in the future"
-    elsif @guess == 'q' || @guess == 'quit'
+    puts "Enter your guess or 'q' to quit: "
+    @current_guess = gets.chomp.downcase
+  end
+
+  def is_it_a_guess?
+    if @current_guess == 'c' || @current_guess == 'cheat'
+      puts "The secret code is #{secret.reveal_secret}"
+    elsif @current_guess == 'q' || @current_guess == 'quit'
       puts "Thanks for playing.  See you soon."
     else
-      evaluate_guess
+      true
+  end
+
+  def is_guess_valid?(secret)
+    if @current_guess.size >= secret.how_long
+      puts "That's too long.  Please try another guess."
+    elsif @current_guess.size <= secret.how_long
+      puts "That's too short.  Please try another guess."
+    else
+      true
     end
   end
 
-  # def is_guess_valid?
-  #   if
-  #     puts "Please enter a guess with the correct number of elements using available colors"
-  #     request_guess
-  #   else
-  #     evaluate_guess
-  # end
   def make_guess_array
-    @guess_array = @guess.chars
+    @guess_array = @current_guess.chars
   end
 
-  def num_correct_colors(secret_code, colors)
+  def num_correct_colors(secret)
     correct_colors = 0
-    colors.each do |color|
-      if secret_code.count(color) >= @guess_array.count(color)
+    secret.possible_colors.each do |color|
+      if secret.how_many(color) >= @guess_array.count(color)
         correct_colors += @guess_array.count(color)
       else
-        correct_colors += secret_code.count(color)
+        correct_colors += secret.how_many(color)
       end
     end
-    puts "#{correct_colors} are the right colors"
-    correct_colors
   end
 
-  def num_correct_placement(secret_code)
+  def num_correct_placement(secret)
     correct_placement = 0
-    @guess_array.each_with_index do |guess, index|
-      correct_placement += 1 if guess == secret_code[index]
+    @guess_array.each_with_index do |current_guess, index|
+      correct_placement += 1 if current_guess == secret.color_at_position(index)
     end
-    puts "#{correct_placement} are in the right place"
-    correct_placement
   end
 
   def evaluate_guess
-    make_guess_array
-    num_correct_colors(['b', 'b', 'y', 'b'], ['r', 'y', 'b', 'g']) #hard coded, need to take it from secret
-    if num_correct_placement(['b', 'b', 'y', 'b']) == ['b', 'b', 'y', 'b'].length
-      puts "You guessed it right!"
-    else
-      puts "Try another guess"
-      request_guess
+    if is_it_a_guess? && is_guess_valid?(secret)
+      if secret.winning_guess?(make_guess_array)
+        puts "You guessed it right!"
+        # ADD THE PLAY AGAIN FUNCTION CALL HERE
+      else
+        @num_guesses += 1
+        puts "Guess #{@num_guesses}:  You have #{num_correct_colors(secret)} colors correct.\n  #{num_correct_placement(secret)} are in the correct place.\n Try again."
+        request_guess
+      end
     end
-
-  end
-
-
-
-  def display_secret
-
   end
 
 end
