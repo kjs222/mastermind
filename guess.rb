@@ -18,23 +18,22 @@ class Guess
     @current_guess = gets.chomp.upcase
   end
 
-  def is_it_a_guess?(secret)
-    if @current_guess == 'C' || @current_guess == 'CHEAT'
-      puts "The secret code is: #{secret.reveal_secret}"
-    elsif @current_guess == 'Q' || @current_guess == 'QUIT'
-      puts "Thanks for playing.  See you soon."
-    else
-      true
-    end
+  def quit?
+     true if (@current_guess == 'Q' || @current_guess == 'QUIT')
   end
 
-  def is_guess_valid?(secret)
-    if @current_guess.size > secret.how_long
+  def redo_guess?(secret)
+    if @current_guess == 'C' || @current_guess == 'CHEAT'
+      puts "The secret code is: #{secret.reveal_secret}"
+      true
+    elsif @current_guess.size > secret.how_long
       puts "That's too long.  Please try another guess."
+      true
     elsif @current_guess.size < secret.how_long
       puts "That's too short.  Please try another guess."
-    else
       true
+    else
+      false
     end
   end
 
@@ -62,19 +61,17 @@ class Guess
     correct_placement
   end
 
+
   def is_guess_correct?(secret)
-    if is_it_a_guess?(secret) && is_guess_valid?(secret)
-      if secret.winning_guess?(make_guess_array)
-        puts "You guessed it right!"
-        #FIX THIS LATER TO RUN END GAME FUNCTION (TRUE HAS TO BE LAST)
-        true
-      else
-        @num_guesses += 1
-        puts "\nGuess #{@num_guesses} was: #{@current_guess}\n#{num_correct_colors(secret)} correct color(s) \n#{num_correct_placement(secret)} in the correct place\n\nTry again!"
-        false
-      end
-    else
+    make_guess_array
+    if secret.winning_guess?(make_guess_array)
+      puts "You guessed it right!"
+      #FIX THIS LATER TO RUN END GAME FUNCTION (TRUE HAS TO BE LAST)
       true
+    else
+      @num_guesses += 1
+      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n#{num_correct_colors(secret)} correct color(s) \n#{num_correct_placement(secret)} in the correct place\n\nTry again!"
+      false
     end
   end
 
@@ -83,16 +80,22 @@ end
 
 if __FILE__ == $0
   test_secret = Secret.new(4)
+  test_guess = Guess.new
+
   p test_secret.game_size
   p test_secret.secret_code
-  test_guess = Guess.new
-  loop do
+
+  test_guess.request_guess
+  while !test_guess.quit? && test_guess.redo_guess?(test_secret)
     test_guess.request_guess
-    break if test_guess.is_guess_correct?(test_secret)
   end
 
-  # until  do
-  #   test_guess.request_guess
-  #   test_guess.is_guess_correct?(test_secret)
-  # end
+##This is all duplicative with above; see if i can fix
+  until test_guess.quit? || test_guess.is_guess_correct?(test_secret)
+    test_guess.request_guess
+    while !test_guess.quit? && test_guess.redo_guess?(test_secret)
+      test_guess.request_guess
+    end
+  end
+
 end
