@@ -19,20 +19,20 @@ class Game
 
 
   def ask_user
-    puts "Would you like to (p)lay a new game, read the (i)nstructions, or (q)uit?"
+    puts "\nWould you like to (p)lay a new game, read the (i)nstructions, or (q)uit?\n"
     @response = gets.chomp.upcase
   end
 
   def quit_game
-    puts "Thanks for playing.  See you again soon."
+    puts "\nThanks for playing.  See you again soon.\n"
   end
 
   def show_instructions
-    puts "This is how you play mastermind" #FINISH
+    puts "\nThis is how you play mastermind\n" #FINISH
   end
 
   def set_game_size
-    puts "Are you a (b)eginner, (i)ntermediate or (a)dvanced player?"
+    puts "\nAre you a (b)eginner, (i)ntermediate or (a)dvanced player?\n"
     @game_type = gets.chomp.upcase
     @game_size = @game_size_hash[@game_type]
   end
@@ -49,18 +49,12 @@ class Game
 
   def end_game(guess, secret)
     determine_duration(@start_time, Time.now)
-    puts "Congratulations!  You guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \nPlease play again!"
+    puts "\n\n\tCongratulations!  \n\tYou guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \n\nPlease play again!"
   end
 
 
 end
 
 if __FILE__ == $0
-  test_game = Game.new
-  # test_game.ask_user
-  # test_secret = Secret.new(test_game.set_game_size)
-  # test_guess = Guess.new
-  p test_game.game_type = "B"
-  p test_game.game_size = @game_size_hash[@game_type]
 
 end

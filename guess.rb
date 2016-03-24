@@ -10,11 +10,11 @@ class Guess
   end
 
   attr_reader :current_guess
-  attr_reader :guess_color_array
+  attr_reader :guess_array
   attr_reader :num_guesses
 
   def request_guess
-    puts "Enter your guess or 'q' to quit this game: "
+    puts "\nEnter your guess or 'q' to quit this game: "
     @current_guess = gets.chomp.upcase
   end
 
@@ -61,44 +61,24 @@ class Guess
     correct_placement
   end
 
+  def record_guess
+    @num_guesses += 1
+  end
+
 
   def is_guess_correct?(secret)
-    @num_guesses += 1
+    record_guess
     make_guess_array
     if secret.winning_guess?(make_guess_array)
-      puts "You guessed it right!"
-      #FIX THIS LATER TO RUN END GAME FUNCTION (TRUE HAS TO BE LAST)
       true
     else
-
-      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n#{num_correct_colors(secret)} correct color(s) \n#{num_correct_placement(secret)} in the correct place\n\nTry again!"
+      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n\n\tYour guess had #{num_correct_colors(secret)} correct color(s) \n\tYour guess had #{num_correct_placement(secret)} in the correct place\n\n\tGuess again!\n\n"
       false
     end
   end
 
-
-
-
 end
 
 if __FILE__ == $0
-  test_secret = Secret.new(4)
-  test_guess = Guess.new
-
-  p test_secret.game_size
-  p test_secret.secret_code
-
-  test_guess.request_guess
-  while !test_guess.quit? && test_guess.redo_guess?(test_secret)
-    test_guess.request_guess
-  end
-
-##This is all duplicative with above; see if i can fix
-  until test_guess.quit? || test_guess.is_guess_correct?(test_secret)
-    test_guess.request_guess
-    while !test_guess.quit? && test_guess.redo_guess?(test_secret)
-      test_guess.request_guess
-    end
-  end
 
 end

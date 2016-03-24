@@ -51,23 +51,14 @@ class Secret
   end
 
   def tell_board_features
-    puts "The board has been set up with #{@game_size} elements."
+    puts "\nThe board has been set up with #{@game_size} elements. The board may contain the following colors:"
     color_list = @colors_hash.values[0...game_size].join(", ")
-    puts "The board may contain the following colors: \n#{color_list}"
+    puts "\n\n\t#{color_list}\n"
   end
 
 
 end
 
 if __FILE__ == $0
-  test = Secret.new(5)
-  # p test.game_size
-  # test.generate_secret
-  # p test.secret_code
-  # p test.how_many('o')
-  # p test.how_many('r')
-  # p test.color_at_position(0)
-  # p test.color_at_position(4)
-  test.tell_board_features
 
 end
