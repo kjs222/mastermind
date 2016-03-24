@@ -22,7 +22,10 @@ while game.ask_user != "Q"
         guess.request_guess
       end
     end
-    game.end_game(guess, secret)
+    #running even on a quit NEEDS FIXING
+    if !guess.quit?
+      game.end_game(guess, secret)
+    end
   else
     game.show_instructions
   end

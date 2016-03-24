@@ -14,7 +14,7 @@ class Guess
   attr_reader :num_guesses
 
   def request_guess
-    puts "Enter your guess or 'q' to quit: "
+    puts "Enter your guess or 'q' to quit this game: "
     @current_guess = gets.chomp.upcase
   end
 
@@ -63,22 +63,20 @@ class Guess
 
 
   def is_guess_correct?(secret)
+    @num_guesses += 1
     make_guess_array
     if secret.winning_guess?(make_guess_array)
       puts "You guessed it right!"
       #FIX THIS LATER TO RUN END GAME FUNCTION (TRUE HAS TO BE LAST)
       true
     else
-      @num_guesses += 1
+
       puts "\nGuess #{@num_guesses} was: #{@current_guess}\n#{num_correct_colors(secret)} correct color(s) \n#{num_correct_placement(secret)} in the correct place\n\nTry again!"
       false
     end
   end
 
-  def reveal_total_guesses
-    @num_guesses
-  end
-  
+
 
 
 end

@@ -51,9 +51,9 @@ class Secret
   end
 
   def tell_board_features
-    puts "The board has #{@game_size} elements."
+    puts "The board has been set up with #{@game_size} elements."
     color_list = @colors_hash.values[0...game_size].join(", ")
-    puts "The board can contain the following colors: \n#{color_list}"
+    puts "The board may contain the following colors: \n#{color_list}"
   end
 
 

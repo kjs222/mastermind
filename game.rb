@@ -4,9 +4,6 @@ require_relative 'secret'
 class Game
   def initialize
     @response = ""
-    @start_time = Time.new #figure out
-    @end_time = Time.new #figure out
-    @duration = @end_time - @start_time
     @game_type =  ""
     @game_size = ""
     @game_size_hash = {"B" => 4, "I" => 5, "A" => 6}
@@ -22,7 +19,7 @@ class Game
 
 
   def ask_user
-    puts "Would you like to (p)lay, read the (i)nstructions, or (q)uit?"
+    puts "Would you like to (p)lay a new game, read the (i)nstructions, or (q)uit?"
     @response = gets.chomp.upcase
   end
 
@@ -41,13 +38,18 @@ class Game
   end
 
   def initiate_game(secret)
-    @start_time = Time.new
+    @start_time = Time.now
     secret.tell_board_features
   end
 
+  def determine_duration(start, finish)
+    @duration = (finish-start).to_i
+  end
+
+
   def end_game(guess, secret)
-    @end_time = Time.new
-    puts "Congratulations!  You guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration}. \nPlease play again!"
+    determine_duration(@start_time, Time.now)
+    puts "Congratulations!  You guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \nPlease play again!"
   end
 
 
