@@ -5,7 +5,7 @@ class Guess
     @current_guess = ""
     @guess_array = []
     @num_guesses = 0
-    @colors_hash = {'r' => 'red', 'g' => 'green', 'b' => 'blue', 'y' => 'yellow'}
+
 
   end
 
@@ -74,6 +74,11 @@ class Guess
       false
     end
   end
+
+  def reveal_total_guesses
+    @num_guesses
+  end
+  
 
 
 end
