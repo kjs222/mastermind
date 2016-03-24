@@ -10,8 +10,11 @@ puts "\n\nWelcome to Mastermind!"
 while game.ask_user != "Q"
 
   if game.response == "P"
+    game_size, num_colors = game.set_game_size
 
-    secret = Secret.new(game.set_game_size)
+    secret = Secret.new(game_size, num_colors)
+    secret.generate_secret
+
     game.initiate_game(secret)
 
     guess = Guess.new

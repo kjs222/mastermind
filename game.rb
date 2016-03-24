@@ -1,12 +1,10 @@
-require_relative 'guess'
-require_relative 'secret'
-
 class Game
   def initialize
     @response = ""
     @game_type =  ""
     @game_size = ""
-    @game_size_hash = {"B" => 4, "I" => 5, "A" => 6}
+    @num_colors = 0
+    @game_size_hash = {"B" => [4, 4], "I" => [6, 5], "A" => [8, 6]}
   end
 
   attr_reader :response
@@ -16,6 +14,7 @@ class Game
   attr_reader :game_type
   attr_reader :game_size
   attr_reader :game_size_hash
+
 
 
   def ask_user
@@ -34,8 +33,11 @@ class Game
   def set_game_size
     puts "\nAre you a (b)eginner, (i)ntermediate or (a)dvanced player?\n"
     @game_type = gets.chomp.upcase
-    @game_size = @game_size_hash[@game_type]
+    @num_colors = @game_size_hash[@game_type][1]
+    @game_size = @game_size_hash[@game_type][0]
+    return @game_size, @num_colors
   end
+
 
   def initiate_game(secret)
     @start_time = Time.now

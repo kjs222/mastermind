@@ -1,12 +1,8 @@
-require_relative 'secret'
-
 class Guess
   def initialize
     @current_guess = ""
     @guess_array = []
     @num_guesses = 0
-
-
   end
 
   attr_reader :current_guess
