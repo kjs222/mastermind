@@ -20,26 +20,22 @@ while game.ask_user != "Q"  && game.response != "QUIT"
     guess = Guess.new
     guess.request_guess
 
-    while !guess.quit? && !guess.show_history? && guess.redo_guess?(secret)
+    while !guess.quit? && guess.redo_guess?(secret)
       guess.request_guess
-      guess.display_history if guess.show_history?
     end
 
-    ##This block is duplicative with above; see if i can fix
+    ##This section is duplicative with above; see if i can fix
     until guess.quit? || guess.is_guess_correct?(secret)
       guess.request_guess
-      guess.display_history if guess.show_history?
 
-      while !guess.quit? && !guess.show_history? && guess.redo_guess?(secret)
+      while !guess.quit? && guess.redo_guess?(secret)
         guess.request_guess
-        guess.display_history if guess.show_history?
       end
     end
 
     if !guess.quit?
       game.end_game(guess, secret)
     end
-
 
   else
     game.show_instructions

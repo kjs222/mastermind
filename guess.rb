@@ -29,6 +29,9 @@ class Guess
     if @current_guess == 'C' || @current_guess == 'CHEAT'
       puts "\nThe secret code is: #{secret.reveal_secret}"
       true
+    elsif @current_guess == 'H' || @current_guess == 'HISTORY'
+      display_history
+      true
     elsif @current_guess.size > secret.how_long
       puts "\nThat's too long.  Please try another guess."
       true
@@ -96,9 +99,6 @@ class Guess
     end
     request_guess
   end
-
-
-
 
 end
 
