@@ -7,9 +7,9 @@ game = Game.new
 
 puts "\n\nWelcome to Mastermind!"
 
-while game.ask_user != "Q"
+while game.ask_user != "Q"  && game.response != "QUIT"
 
-  if game.response == "P"
+  if game.response == "P" || game.response == "PLAY"
     game_size, num_colors = game.set_game_size
 
     secret = Secret.new(game_size, num_colors)
