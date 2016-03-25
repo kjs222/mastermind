@@ -1,0 +1,27 @@
+
+
+Instructions for Mastermind
+
+The goal of Mastermind is to crack a code through
+a series of guesses.  The code consists of a set of
+colors arranged in a particular sequence.
+
+Depending on the whether you choose the beginner,
+intermediate, or advanced game types, the game will
+generate a secret code of a set length, from a list
+of available colors.  You will be told the length and
+available colors.
+
+The secret code may not include all available colors,
+and,likewise, the code may have duplicate colors.
+
+After each guess, you will receive feedback on your guess.
+You will learn how many colors were correct, and how many
+were in the correct placement.  This information will help
+you figure out the correct code.
+
+The game also allows you to see your guess history.  The
+history can help you crack the code.
+
+The goal is to crack the code in the fewest number of
+guesses.

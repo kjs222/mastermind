@@ -27,7 +27,8 @@ class Game
   end
 
   def show_instructions
-    puts "\nThis is how you play mastermind\n" #FINISH
+    # puts "\nThis is how you play mastermind\n" #FINISH
+    puts File.read("instructions.txt")
   end
 
   def set_game_size
