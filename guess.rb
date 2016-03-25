@@ -13,12 +13,16 @@ class Guess
   attr_reader :guess_history
 
   def request_guess
-    puts "\nEnter your guess or 'q' to quit this game: "
+    puts "\nEnter your guess, 'h' to see guess history, or 'q' to quit this game: "
     @current_guess = gets.chomp.upcase
   end
 
   def quit?
      true if (@current_guess == 'Q' || @current_guess == 'QUIT')
+  end
+
+  def show_history?
+    true if (@current_guess == 'H' || @current_guess == 'HISTORY')
   end
 
   def redo_guess?(secret)
@@ -88,8 +92,9 @@ class Guess
   def display_history
     puts "\n\tYour guess history is:\n"
     guess_history.each do |guess_num, guess_info|
-      puts "\t\t#{guess_num}.  #{guess_info[:guess]}  #{guess_info[:correct_colors]} correct color(s)   #{guess_info[:correct_placement]} correct placement(s)"
+      puts "\t#{guess_num}.  #{guess_info[:guess]}  #{guess_info[:correct_colors]} correct color(s)   #{guess_info[:correct_placement]} correct placement(s)"
     end
+    request_guess
   end
 
 
