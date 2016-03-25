@@ -2,9 +2,11 @@ class Game
   def initialize
     @response = ""
     @game_type =  ""
-    @game_size = ""
+    @game_size = 0
     @num_colors = 0
-    @game_size_hash = {"B" => [4, 4], "I" => [6, 5], "A" => [8, 6]}
+    @game_type_hash = {"B"=>{:game_size => 4, :num_colors => 4},
+                       "I"=>{:game_size => 6, :num_colors => 5},
+                       "A"=>{:game_size => 8, :num_colors => 6}}
   end
 
   attr_reader :response
@@ -13,9 +15,7 @@ class Game
   attr_reader :duration
   attr_reader :game_type
   attr_reader :game_size
-  attr_reader :game_size_hash
-
-
+  attr_reader :game_type_hash
 
   def ask_user
     puts "\nWould you like to (p)lay a new game, read the (i)nstructions, or (q)uit?\n"
@@ -33,8 +33,8 @@ class Game
   def set_game_size
     puts "\nAre you a (b)eginner, (i)ntermediate or (a)dvanced player?\n"
     @game_type = gets.chomp.upcase
-    @num_colors = @game_size_hash[@game_type][1]
-    @game_size = @game_size_hash[@game_type][0]
+    @num_colors = @game_type_hash[@game_type][:num_colors]
+    @game_size = @game_type_hash[@game_type][:game_size]
     return @game_size, @num_colors
   end
 

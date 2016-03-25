@@ -5,19 +5,13 @@ class Secret
     @num_colors = num_colors
     @secret_code = []
     @colors = ['R', 'G', 'B', 'Y', 'P', 'O']
-    @colors_hash = {'R' => "(R)ed", 'G' => "(G)reen", 'B' => "(B)lue", 'Y' => "(Y)ellow", 'P' => "(P)urple", 'O' => "(O)range"}
+    @colors_hash = {'R' => "(R)ed", 'G' => "(G)reen", 'B' => "(B)lue",
+                    'Y' => "(Y)ellow", 'P' => "(P)urple", 'O' => "(O)range"}
   end
 
   attr_reader :game_size
   attr_reader :colors
   attr_reader :secret_code
-  #attr_reader :num_colors
-
-  # def determine_number_colors
-  #   @num_colors = 4 if @game_size == 4
-  #   @num_colors = 5 if @game_size == 6
-  #   @num_colors = 6 if @game_size == 8
-  # end
 
   def generate_random_color
     color_position = rand(@num_colors)
@@ -56,7 +50,6 @@ class Secret
   end
 
   def tell_board_features
-    p @num_colors
     puts "\nThe board has been set up with #{@game_size} elements. The board may contain the following colors:"
 
     color_list = @colors_hash.values[0...@num_colors].join(", ")

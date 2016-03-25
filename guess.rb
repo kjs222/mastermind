@@ -20,13 +20,13 @@ class Guess
 
   def redo_guess?(secret)
     if @current_guess == 'C' || @current_guess == 'CHEAT'
-      puts "The secret code is: #{secret.reveal_secret}"
+      puts "\nThe secret code is: #{secret.reveal_secret}"
       true
     elsif @current_guess.size > secret.how_long
-      puts "That's too long.  Please try another guess."
+      puts "\nThat's too long.  Please try another guess."
       true
     elsif @current_guess.size < secret.how_long
-      puts "That's too short.  Please try another guess."
+      puts "\nThat's too short.  Please try another guess."
       true
     else
       false
