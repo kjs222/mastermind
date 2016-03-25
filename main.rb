@@ -24,7 +24,7 @@ while game.ask_user != "Q"  && game.response != "QUIT"
       guess.request_guess
     end
 
-    ##This block is duplicative with above; see if i can fix
+    ##This section is duplicative with above; see if i can fix
     until guess.quit? || guess.is_guess_correct?(secret)
       guess.request_guess
 

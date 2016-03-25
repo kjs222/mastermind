@@ -2,9 +2,10 @@ class Guess
   def initialize
     @current_guess = ""
     @guess_array = []
-    @guess_history = []
+    @guess_history = {} #hash of hashes
     @num_guesses = 0
   end
+
 
   attr_reader :current_guess
   attr_reader :guess_array
@@ -12,7 +13,7 @@ class Guess
   attr_reader :guess_history
 
   def request_guess
-    puts "\nEnter your guess or 'q' to quit this game: "
+    puts "\nEnter your guess, 'h' to see guess history, or 'q' to quit this game: "
     @current_guess = gets.chomp.upcase
   end
 
@@ -23,6 +24,9 @@ class Guess
   def redo_guess?(secret)
     if @current_guess == 'C' || @current_guess == 'CHEAT'
       puts "\nThe secret code is: #{secret.reveal_secret}"
+      true
+    elsif @current_guess == 'H' || @current_guess == 'HISTORY'
+      display_history
       true
     elsif @current_guess.size > secret.how_long
       puts "\nThat's too long.  Please try another guess."
@@ -60,23 +64,34 @@ class Guess
   end
 
   def set_guess_number
-    @num_guesses  = guess_history.length
+    @num_guesses  += 1
   end
 
-  def add_to_history
-    @guess_history << @current_guess
-    set_guess_number
+  def add_to_history(secret)
+    @guess_history[set_guess_number] = {:guess => @current_guess, :correct_colors => num_correct_colors(secret), :correct_placement => num_correct_placement(secret)}
   end
-
 
   def is_guess_correct?(secret)
-    add_to_history
     make_guess_array
-    if secret.winning_guess?(make_guess_array)
+    add_to_history(secret)
+    if secret.winning_guess?(@guess_array)
       true
     else
-      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n\n\tYour guess had #{num_correct_colors(secret)} correct color(s) \n\tYour guess had #{num_correct_placement(secret)} in the correct place\n\n\tYour guess history is: #{@guess_history.join(", ").upcase}\n\n\tGuess again!\n\n"
+      display_guess_feedback
       false
+    end
+  end
+
+  def display_guess_feedback
+    puts "\nGuess #{@num_guesses} was: #{@guess_history[@num_guesses][:guess]}"
+    puts "\n\tYour guess had #{@guess_history[@num_guesses][:correct_colors]} correct color(s)."
+    puts "\tYour guess had #{@guess_history[@num_guesses][:correct_placement]} in the correct place"
+  end
+
+  def display_history
+    puts "\n\tYour guess history is:\n"
+    guess_history.each do |guess_num, guess_info|
+      puts "\t#{guess_num}.  #{guess_info[:guess]}  #{guess_info[:correct_colors]} correct color(s)   #{guess_info[:correct_placement]} correct placement(s)"
     end
   end
 
