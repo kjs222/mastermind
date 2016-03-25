@@ -2,12 +2,14 @@ class Guess
   def initialize
     @current_guess = ""
     @guess_array = []
+    @guess_history = []
     @num_guesses = 0
   end
 
   attr_reader :current_guess
   attr_reader :guess_array
   attr_reader :num_guesses
+  attr_reader :guess_history
 
   def request_guess
     puts "\nEnter your guess or 'q' to quit this game: "
@@ -57,18 +59,23 @@ class Guess
     correct_placement
   end
 
-  def record_guess
-    @num_guesses += 1
+  def set_guess_number
+    @num_guesses  = guess_history.length
+  end
+
+  def add_to_history
+    @guess_history << @current_guess
+    set_guess_number
   end
 
 
   def is_guess_correct?(secret)
-    record_guess
+    add_to_history
     make_guess_array
     if secret.winning_guess?(make_guess_array)
       true
     else
-      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n\n\tYour guess had #{num_correct_colors(secret)} correct color(s) \n\tYour guess had #{num_correct_placement(secret)} in the correct place\n\n\tGuess again!\n\n"
+      puts "\nGuess #{@num_guesses} was: #{@current_guess}\n\n\tYour guess had #{num_correct_colors(secret)} correct color(s) \n\tYour guess had #{num_correct_placement(secret)} in the correct place\n\n\tYour guess history is: #{@guess_history.join(", ").upcase}\n\n\tGuess again!\n\n"
       false
     end
   end
