@@ -38,7 +38,7 @@ class Secret
   end
 
   def possible_colors
-    colors[0...game_size]
+    colors[0...@num_colors]
   end
 
   def winning_guess?(guess_array)
