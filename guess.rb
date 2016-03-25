@@ -21,10 +21,6 @@ class Guess
      true if (@current_guess == 'Q' || @current_guess == 'QUIT')
   end
 
-  def show_history?
-    true if (@current_guess == 'H' || @current_guess == 'HISTORY')
-  end
-
   def redo_guess?(secret)
     if @current_guess == 'C' || @current_guess == 'CHEAT'
       puts "\nThe secret code is: #{secret.reveal_secret}"
@@ -97,7 +93,6 @@ class Guess
     guess_history.each do |guess_num, guess_info|
       puts "\t#{guess_num}.  #{guess_info[:guess]}  #{guess_info[:correct_colors]} correct color(s)   #{guess_info[:correct_placement]} correct placement(s)"
     end
-    request_guess
   end
 
 end
