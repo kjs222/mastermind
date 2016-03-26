@@ -1,6 +1,7 @@
 require_relative 'game'
 require_relative 'guess'
 require_relative 'secret'
+require_relative 'leaderboard'
 
 
 game = Game.new

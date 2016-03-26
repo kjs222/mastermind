@@ -25,7 +25,7 @@ class Leaderboard
   end
 
   def leader?(num_guesses, duration)
-    true if @leaders.size < 10 || (num_guesses <= @leaders[-1][1].to_i && duration <= @leaders[-1][2].to_i)
+    true if @leaders.size < 9 || (num_guesses <= @leaders[-1][1].to_i && duration <= @leaders[-1][2].to_i)
   end
 
   def get_leader_name
@@ -44,25 +44,16 @@ class Leaderboard
         if duration.to_i < leader[2].to_i
           return rank
         end
-      else
-        return rank
       end
     end
     return @leaders.length
   end
 
-
-
-
   def add_leader(rank, name, num_guess, duration, type) #hash this?
     if @leaders.empty?
-      puts "got in empty"
       @leaders.push([name, num_guess, duration, type])
     else
-      puts 'got in not empty'
-      puts "leaders before insert #{@leaders} end"
       @leaders.insert(rank, [name, num_guess, duration, type])
-      puts "leaders after insert #{@leaders} end"
     end
   end
 
@@ -80,29 +71,26 @@ class Leaderboard
 
 
   def display_leaders
-    #read file to command line
-    #format?
+    puts "\n\nTop 10 Leaderboard:"
+    puts "\tName \t\t#Guesses \t#Seconds \tGame Type"
+    @leaders.each_with_index do |leader, index|
+      puts "#{index + 1}. \t#{leader[0]} \t\t#{leader[1]} \t\t#{leader[2]} \t\t#{leader[3]}"
+    end
   end
 
-
-
+  def run_leaderboard(num_guesses, duration, type)
+    read_leaderboard
+    if leader?(num_guesses, duration)
+      add_leader(find_rank(num_guesses, duration), get_leader_name, num_guesses, duration, type)
+      remove_leader
+      update_file
+      display_leaders
+    end
+  end
 
 end
 
 if __FILE__ == $0
-  test = Leaderboard.new
-  puts "before anything #{test.leaders} end"
-  test.read_leaderboard
-  puts "after reading #{test.leaders} end"
-  p test.find_rank(6, 300)
-  test.get_leader_name if test.leader?(6, 300)
-  test.add_leader(test.find_rank(6, 300), test.name, 6, 300, 'b')
-  p test.leaders
-  test.remove_leader
-  p test.leaders
-  test.update_file
-  CSV.foreach(test.leaders_file) { |row| p row }
 
-  #test.create_leaderboard
 
 end

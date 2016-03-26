@@ -49,8 +49,10 @@ class Game
   end
 
   def end_game(guess, secret)
+    leaderboard = Leaderboard.new
     determine_duration(@start_time, Time.now)
     puts "\n\n\tCongratulations!  \n\tYou guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \n\nPlease play again!"
+    leaderboard.run_leaderboard(guess.num_guesses, @duration, @game_type)
   end
 
 end
