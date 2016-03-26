@@ -27,7 +27,6 @@ class Game
   end
 
   def show_instructions
-    # puts "\nThis is how you play mastermind\n" #FINISH
     puts File.read("instructions.txt")
   end
 
@@ -49,12 +48,10 @@ class Game
     @duration = (finish-start).to_i
   end
 
-
   def end_game(guess, secret)
     determine_duration(@start_time, Time.now)
     puts "\n\n\tCongratulations!  \n\tYou guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \n\nPlease play again!"
   end
-
 
 end
 
