@@ -1,8 +1,6 @@
 require 'csv'
-# csv structure
-# 0 name, 1 num_guesses, 2 duration, 3 game type
+# csv structure: 0 name, 1 num_guesses, 2 duration, 3 game type
 # reference: http://www.sitepoint.com/guide-ruby-csv-library-part/
-
 
 class Leaderboard
   def initialize
@@ -14,10 +12,6 @@ class Leaderboard
   attr_reader :leaders_file
   attr_reader :leaders
   attr_reader :name
-
-  # def leaderboard_file?
-  #   File.exist?(@leaders_file)
-  # end
 
   def read_leaderboard
     File.open(@leaders_file, 'a+')
@@ -69,7 +63,6 @@ class Leaderboard
     end
   end
 
-
   def display_leaders
     puts "\n\nTop 10 Leaderboard:"
     puts "\tName \t\t#Guesses \t#Seconds \tGame Type"
@@ -87,10 +80,5 @@ class Leaderboard
       display_leaders
     end
   end
-
-end
-
-if __FILE__ == $0
-
 
 end

@@ -3,7 +3,6 @@ require_relative 'guess'
 require_relative 'secret'
 require_relative 'leaderboard'
 
-
 game = Game.new
 
 puts "\n\nWelcome to Mastermind!"
@@ -25,7 +24,6 @@ while game.ask_user != "Q"  && game.response != "QUIT"
       guess.request_guess
     end
 
-    ##This section is duplicative with above; see if i can fix
     until guess.quit? || guess.is_guess_correct?(secret)
       guess.request_guess
 

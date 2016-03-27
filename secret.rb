@@ -4,7 +4,7 @@ class Secret
     @game_size = game_size
     @num_colors = num_colors
     @secret_code = []
-    @colors = ['R', 'G', 'B', 'Y', 'P', 'O'] #can refactor and get rid of this
+    @colors = ['R', 'G', 'B', 'Y', 'P', 'O']
     @colors_hash = {'R' => "(R)ed", 'G' => "(G)reen", 'B' => "(B)lue",
                     'Y' => "(Y)ellow", 'P' => "(P)urple", 'O' => "(O)range"}
   end
@@ -55,10 +55,5 @@ class Secret
     color_list = @colors_hash.values[0...@num_colors].join(", ")
     puts "\n\n\t#{color_list}\n"
   end
-
-
-end
-
-if __FILE__ == $0
 
 end

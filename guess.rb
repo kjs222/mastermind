@@ -6,7 +6,6 @@ class Guess
     @num_guesses = 0
   end
 
-
   attr_reader :current_guess
   attr_reader :guess_array
   attr_reader :num_guesses
@@ -94,9 +93,5 @@ class Guess
       puts "\t#{guess_num}.  #{guess_info[:guess]}  #{guess_info[:correct_colors]} correct color(s)   #{guess_info[:correct_placement]} correct placement(s)"
     end
   end
-
-end
-
-if __FILE__ == $0
 
 end
