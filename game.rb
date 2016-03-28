@@ -38,7 +38,6 @@ class Game
     return @game_size, @num_colors
   end
 
-
   def initiate_game(secret)
     @start_time = Time.now
     secret.tell_board_features
@@ -54,9 +53,5 @@ class Game
     puts "\n\n\tCongratulations!  \n\tYou guessed the sequence '#{secret.reveal_secret}' in #{guess.num_guesses} guesses over #{@duration} seconds. \n\nPlease play again!"
     leaderboard.run_leaderboard(guess.num_guesses, @duration, @game_type)
   end
-
-end
-
-if __FILE__ == $0
 
 end

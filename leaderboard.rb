@@ -14,12 +14,11 @@ class Leaderboard
   attr_reader :name
 
   def read_leaderboard
-    File.open(@leaders_file, 'a+')
     @leaders = CSV.read(@leaders_file, converters: :numeric)
   end
 
   def leader?(num_guesses, duration)
-    true if @leaders.size < 9 || (num_guesses <= @leaders[-1][1].to_i && duration <= @leaders[-1][2].to_i)
+    true if @leaders.size < 10 || (num_guesses <= @leaders[-1][1].to_i && duration <= @leaders[-1][2].to_i)
   end
 
   def get_leader_name
