@@ -6,13 +6,13 @@
 2. Do one of the following to start a game:
     * type `ruby main.rb` on the command line, OR
     * type `./mastermind.sh` on the command line, OR
-    * put a copy the mastermind shell script into a directory that's in your computer's path OR, OR
+    * put a copy the mastermind shell script into a directory that's in your computer's path, OR
       * type `cp mastermind.sh [path to a directory in your path]/mastermind` on the command line
-      * **from now on** you can run `mastermind` from the command line **from any location**
+      * **from now on** you can run `mastermind` from the command line
     * put a symbolic link to the mastermind shell script into a directory that's in your computer's path.
       * navigate to the directory in your computer's path
       * type `ln -s [path to your local repo]/mastermind.sh mastermind`
-      * **from now on** you can run `mastermind` from the command line **from any location**
+      * **from now on** you can run `mastermind` from the command line
 3.  When you start a new game, you will be able to view the game instructions.
 
 ####Features:
@@ -26,4 +26,5 @@
 
 1.  Leaderboard covers all game types (beginner, intermediate, and advanced) in one comprehensive list.  It would be better to have separate leaderboards for each game type.
 2.  Secret code should be displayed on quit.
+3.  Available colors should be displayed more frequently or upon request.
 3.  Tests
